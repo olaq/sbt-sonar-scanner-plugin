@@ -3,11 +3,11 @@ SonarQube Scanner for SBT
 
 [![Build Status](https://travis-ci.org/olaq/sbt-sonar-scanner-plugin.svg?branch=master)](https://travis-ci.org/olaq/sbt-sonar-scanner-plugin)
 
-#About
+## About
 This is sbt plugin that is a wrapper for sonar-scanner (similar to Ant or Gradle scanners).
 Uses embedded sonar-scanner-api, hence does not require you to download separate binaries manually.
 
-#Install
+## Install
 Add following to statement to project/plugins.sbt
 ```scala
 resolvers += Resolver.url(
@@ -18,7 +18,7 @@ resolvers += Resolver.url(
 addSbtPlugin("com.olaq" % "sbt-sonar-scanner-plugin" % "1.0.0")
 ```
 
-#Configuration
+## Configuration
 Add following statement to build.sbt. You can use any valid sonar parameter.
 ```scala
 sonarProperties ++= Map(
@@ -28,7 +28,7 @@ sonarProperties ++= Map(
 Some parameters are set by default based on project settings (like name, version).  
 Valid parameters can be found here: https://docs.sonarqube.org/display/SONAR/Analysis+Parameters
 
-#Run
+## Run
 ```sbtshell
 sbt sonar
 ```
