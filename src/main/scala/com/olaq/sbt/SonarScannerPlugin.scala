@@ -11,7 +11,7 @@ import scala.collection.JavaConversions
 object SonarScannerPlugin extends AutoPlugin {
 
   object autoImport {
-    val sonarScan: TaskKey[Unit] = taskKey[Unit]("Runs sonar-scanner")
+    val sonar: TaskKey[Unit] = taskKey[Unit]("Runs sonar-scanner")
     val printSonarProperties: TaskKey[Unit] = taskKey[Unit]("Prints Sonar properties for current project")
     val sonarProperties: SettingKey[Map[String, String]] = settingKey[Map[String, String]]("Sonar Scanner properties")
   }
@@ -19,7 +19,7 @@ object SonarScannerPlugin extends AutoPlugin {
   import autoImport._
 
   override def projectSettings = Seq(
-    sonarScan := sonarScanTask.value,
+    sonar := sonarScanTask.value,
     printSonarProperties := printSonarPropertiesTask.value,
     sonarProperties := Map(
       "sonar.host.url" -> "http://localhost:9000",
