@@ -10,12 +10,7 @@ Uses embedded sonar-scanner-api, hence does not require you to download separate
 ## Install
 Add following to statement to project/plugins.sbt
 ```scala
-resolvers += Resolver.url(
-    "bintray-olaq-sbt-plugins",
-    url("http://dl.bintray.com/olaq/sbt-plugins"))(
-    Resolver.ivyStylePatterns)
-
-addSbtPlugin("com.olaq" % "sbt-sonar-scanner-plugin" % "1.0.0")
+addSbtPlugin("com.olaq" % "sbt-sonar-scanner-plugin" % "1.1.0")
 ```
 
 ## Configuration
