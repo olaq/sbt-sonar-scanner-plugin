@@ -13,21 +13,30 @@ object SonarScannerPlugin extends AutoPlugin {
   object autoImport {
     val sonar: TaskKey[Unit] = taskKey[Unit]("Runs sonar-scanner")
     val printSonarProperties: TaskKey[Unit] = taskKey[Unit]("Prints Sonar properties for current project")
-    val sonarProperties: SettingKey[Map[String, String]] = settingKey[Map[String, String]]("Sonar Scanner properties")
+    val sonarProperties: TaskKey[Map[String, String]] = taskKey[Map[String, String]]("Sonar Scanner properties")
   }
 
   import autoImport._
 
+  override def trigger: PluginTrigger = allRequirements
+
   override def projectSettings = Seq(
     sonar := sonarScanTask.value,
     printSonarProperties := printSonarPropertiesTask.value,
-    sonarProperties := Map(
+    sonarProperties := sonarPropertiesTask.value
+  )
+
+  private lazy val sonarPropertiesTask = Def.task {
+    Map(
       "sonar.host.url" -> "http://localhost:9000",
       "sonar.projectKey" -> s"${organization.value}:${name.value}",
       "sonar.projectVersion" -> version.value,
-      "sonar.sources" -> sourceDirectory.in(Compile).value.absolutePath
+      "sonar.sources" -> sourceDirectory.in(Compile).value.absolutePath,
+      "sonar.java.libraries" -> dependencyClasspath.in(Compile).value
+        .map(p => p.data.absolutePath)
+        .mkString(",")
     )
-  )
+  }
 
   private lazy val sonarScanTask = Def.task {
     val properties = new Properties()
