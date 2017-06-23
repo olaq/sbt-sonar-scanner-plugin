@@ -32,8 +32,14 @@ object SonarScannerPlugin extends AutoPlugin {
       "sonar.projectKey" -> s"${organization.value}:${name.value}",
       "sonar.projectVersion" -> version.value,
       "sonar.sources" -> sourceDirectory.in(Compile).value.absolutePath,
+      "sonar.java.binaries" -> classDirectory.in(Compile).value.absolutePath,
+      "sonar.java.test.binaries" -> classDirectory.in(Test).value.absolutePath,
       "sonar.java.libraries" -> dependencyClasspath.in(Compile).value
         .map(p => p.data.absolutePath)
+        .mkString(","),
+      "sonar.java.test.libraries" -> dependencyClasspath.in(Test).value
+        .map(p => p.data.absolutePath)
+        .filter(s => s.endsWith(".jar"))
         .mkString(",")
     )
   }
@@ -42,9 +48,9 @@ object SonarScannerPlugin extends AutoPlugin {
     val properties = new Properties()
     properties.putAll(JavaConversions.mapAsJavaMap(sonarProperties.value))
 
-    val runner = EmbeddedScanner.create(new LogOutputImpl())
+    val runner = EmbeddedScanner.create(new LogOutputImpl(sLog.value))
       .addGlobalProperties(properties)
-      .setApp("sbt", "1.0")
+      .setApp("sbt", "1.2")
 
     try {
       runner.start()
@@ -53,13 +59,20 @@ object SonarScannerPlugin extends AutoPlugin {
   }
 
   private lazy val printSonarPropertiesTask = Def.task {
-    sonarProperties.value.foreach(p => println(p._1 + "=" + p._2))
+    val logger = sLog.value
+    logger.info("Printing sonar properties:")
+    sonarProperties.value.foreach(p => logger.info(p._1 + "=" + p._2))
   }
 
-  class LogOutputImpl extends LogOutput {
+  class LogOutputImpl(logger: Logger) extends LogOutput {
     override def log(formattedMessage: String, level: LogOutput.Level): Unit = {
-      // TODO log it properly
-      println(formattedMessage)
+      level match {
+        case LogOutput.Level.TRACE => logger.debug(formattedMessage)
+        case LogOutput.Level.DEBUG => logger.debug(formattedMessage)
+        case LogOutput.Level.INFO => logger.info(formattedMessage)
+        case LogOutput.Level.WARN => logger.warn(formattedMessage)
+        case LogOutput.Level.ERROR => logger.error(formattedMessage)
+      }
     }
   }
 

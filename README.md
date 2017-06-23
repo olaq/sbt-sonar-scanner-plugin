@@ -14,14 +14,33 @@ addSbtPlugin("com.olaq" % "sbt-sonar-scanner-plugin" % "1.1.0")
 ```
 
 ## Configuration
-Add following statement to build.sbt. You can use any valid sonar parameter.
+Add `sonarProperties` to build.sbt. Example:
 ```scala
 sonarProperties ++= Map(
-      "sonar.host.url" -> "http://sonar.somewhere.com:9000"
+  "sonar.host.url" -> "http://sonar.somewhere.com:9000",
+  "sonar.java.source" -> "1.8",
+  "sonar.junit.reportsPath" -> "target/test-reports",
+  "sonar.jacoco.reportPaths" -> "target/scala-2.11/jacoco/jacoco.exec"
 )
 ```
-Some parameters are set by default based on project settings (like name, version).  
+Any valid sonar parameter can be used.
 Valid parameters can be found here: https://docs.sonarqube.org/display/SONAR/Analysis+Parameters
+  
+Following parameters have default value provided by plugin.
+      
+      "sonar.host.url"
+      "sonar.projectKey"
+      "sonar.projectVersion"
+      "sonar.sources"
+      "sonar.java.binaries"
+      "sonar.java.test.binaries"
+      "sonar.java.libraries"
+      "sonar.java.test.libraries"
+      
+To print properties run:
+```sbtshell
+sbt printSonarProperties
+```
 
 ## Run
 ```sbtshell
