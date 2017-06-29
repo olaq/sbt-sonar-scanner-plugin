@@ -32,6 +32,7 @@ object SonarScannerPlugin extends AutoPlugin {
       "sonar.projectKey" -> s"${organization.value}:${name.value}",
       "sonar.projectVersion" -> version.value,
       "sonar.sources" -> sourceDirectory.in(Compile).value.absolutePath,
+      "sonar.tests" -> sourceDirectory.in(Test).value.absolutePath,
       "sonar.java.binaries" -> classDirectory.in(Compile).value.absolutePath,
       "sonar.java.test.binaries" -> classDirectory.in(Test).value.absolutePath,
       "sonar.java.libraries" -> dependencyClasspath.in(Compile).value

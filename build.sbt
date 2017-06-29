@@ -1,6 +1,6 @@
 name := "sbt-sonar-scanner-plugin"
 
-version := "1.2.0"
+version := "1.2.1-SNAPSHOT"
 
 organization := "com.olaq"
 
