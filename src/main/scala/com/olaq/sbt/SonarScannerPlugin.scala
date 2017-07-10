@@ -53,10 +53,9 @@ object SonarScannerPlugin extends AutoPlugin {
       .addGlobalProperties(properties)
       .setApp("sbt", "1.2")
 
-    try {
-      runner.start()
-      runner.runAnalysis(properties)
-    } finally runner.stop()
+    runner.start()
+    runner.runAnalysis(properties)
+    runner.stop()
   }
 
   private lazy val printSonarPropertiesTask = Def.task {
