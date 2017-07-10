@@ -51,7 +51,6 @@ object SonarScannerPlugin extends AutoPlugin {
 
     val runner = EmbeddedScanner.create(new LogOutputImpl(sLog.value))
       .addGlobalProperties(properties)
-      .setApp("sbt", "1.2")
 
     runner.start()
     runner.runAnalysis(properties)
