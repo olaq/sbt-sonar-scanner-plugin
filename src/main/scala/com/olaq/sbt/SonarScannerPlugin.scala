@@ -6,7 +6,7 @@ import org.sonarsource.scanner.api.{EmbeddedScanner, LogOutput}
 import sbt.{Def, _}
 import Keys._
 
-import scala.collection.JavaConversions
+import scala.collection.JavaConverters
 
 object SonarScannerPlugin extends AutoPlugin {
 
@@ -47,7 +47,7 @@ object SonarScannerPlugin extends AutoPlugin {
 
   private lazy val sonarScanTask = Def.task {
     val properties = new Properties()
-    properties.putAll(JavaConversions.mapAsJavaMap(sonarProperties.value))
+    properties.putAll(JavaConverters.mapAsJavaMap(sonarProperties.value))
 
     val runner = EmbeddedScanner.create(new LogOutputImpl(sLog.value))
       .addGlobalProperties(properties)
