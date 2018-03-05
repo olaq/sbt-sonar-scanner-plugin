@@ -6,7 +6,7 @@ services:
 
 before_install:
 - docker pull sonarqube:lts-alpine
-- docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+- docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube:lts-alpine
 
 script:
    - sbt ^scripted
