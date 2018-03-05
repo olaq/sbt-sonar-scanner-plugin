@@ -15,3 +15,8 @@ lazy val root = (project in file(".")).settings(
   bintrayOrganization in bintray := None,
   libraryDependencies += "org.sonarsource.scanner.api" % "sonar-scanner-api" % "2.9.0.887",
 )
+
+scriptedLaunchOpts := { scriptedLaunchOpts.value ++
+  Seq("-Xmx512M", "-Dplugin.version=" + version.value)
+}
+scriptedBufferLog := false

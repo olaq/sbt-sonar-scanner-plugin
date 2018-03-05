@@ -1,0 +1,5 @@
+# should print properties
+> printSonarProperties
+# should connect to sonar server and run sonar analysis
+> sonar
+$ exists .scannerwork/report-task.txt
