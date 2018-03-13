@@ -1,6 +1,6 @@
 
 lazy val commonSettings = Seq(
-  version in ThisBuild := "1.3.0-SNAPSHOT",
+  version in ThisBuild := "1.3.0",
   organization in ThisBuild := "com.olaq"
 )
 
