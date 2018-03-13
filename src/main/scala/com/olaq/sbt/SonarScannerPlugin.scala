@@ -60,7 +60,7 @@ object SonarScannerPlugin extends AutoPlugin {
   private lazy val printSonarPropertiesTask = Def.task {
     val logger = sLog.value
     logger.info("Printing sonar properties:")
-    sonarProperties.value.foreach(p => logger.info(p._1 + "=" + p._2))
+    logger.info(sonarProperties.value.mkString("\n"))
   }
 
   class LogOutputImpl(logger: Logger) extends LogOutput {
